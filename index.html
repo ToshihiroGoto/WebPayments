@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>Web Payments</title>
+</head>
+<body>
+	<button onclick="pay()">お支払い</button>
+	
+	<script>
+	function pay() {
+		// 通貨は ISO 4217 の文字コード
+		var request = new PaymentRequest(
+			['visa','mc','amex'],
+			{
+				items: [
+					{
+						id: "basket", label: "合計（税抜き）",
+						amount: { currencyCode: "JPY", value: "10000" }
+					},
+					{
+						id: "shipping", label: "送料無料",
+						amount: { currencyCode: "JPY", value: "0"}
+					},
+					{
+						id: "tax", label: "消費税",
+						amount: { currencyCode: "JPY", value: "800" }
+					},
+					{
+						id: "total", label: "合計（税込み）",
+						amount: { currencyCode: "JPY", value: "10800" }
+					}
+				],
+				shippingOptions: [
+				{ id: "free", label: "FREE shipping", amount: { currencyCode: "USD", value: "0.00" } }
+				]
+			},
+			{ requestShipping:true }
+		);
+
+		request.show()
+			.then(function(response) {
+				console.log("処理中")
+				return response.complete(true);
+			})
+			.then(function() {
+				alert("購入完了");
+			})
+			.catch(function(e) {
+				alert("エラー： " + e.name);
+			});
+	}
+
+	</script>
+</body>
+</html>
