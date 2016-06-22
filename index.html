@@ -8,48 +8,50 @@
 	<button onclick="pay()">お支払い</button>
 	
 	<script>
+        funciton pay(){
 
-var methodData = [
-  {
-    supportedMethods: ["visa","bitcoin"]
-  },
-  {
-    supportedMethods: ["bobpay.com"],
-    data: {
-      merchantIdentifier: "XXXX",
-      bobPaySpecificField: true
-    }
-  }
-]
+            var methodData = [
+            {
+                supportedMethods: ["visa","bitcoin"]
+            },
+            {
+                supportedMethods: ["bobpay.com"],
+                data: {
+                    merchantIdentifier: "XXXX",
+                    bobPaySpecificField: true
+                }
+            }
+            ]
 
-var details = {
-  displayItems: [
-    {
-      label: "Sub-total",
-      amount: { currency: "USD", value : "55.00" }, // US$55.00
-    },
-    {
-      label: "Sales Tax",
-      amount: { currency: "USD", value : "5.00" }, // US$5.00
-    }
-  ],
-  total:  {
-    label: "Total due",
-    amount: { currency: "USD", value : "60.00" }, // US$60.00
-  }
-}
+            var details = {
+                displayItems: [
+                    {
+                        label: "Sub-total",
+                        amount: { currency: "USD", value : "55.00" }, // US$55.00
+                    },
+                    {
+                        label: "Sales Tax",
+                        amount: { currency: "USD", value : "5.00" }, // US$5.00
+                    }
+                ],
+                total:  {
+                    label: "Total due",
+                    amount: { currency: "USD", value : "60.00" }, // US$60.00
+                }
+            }
 
-var options  = {
-  requestShipping: true
-}
+            var options  = {
+                requestShipping: true
+            }
 
-var payment = new PaymentRequest(methodData, details, options);
+            var payment = new PaymentRequest(methodData, details, options);
 
-payment.show().then(function(paymentResponse) {
-  paymentResponse.complete("success");
-}).catch(function(err) {
-  console.error("Uh oh, something bad happened", err.message);
-});
+            payment.show().then(function(paymentResponse) {
+                paymentResponse.complete("success");
+            }).catch(function(err) {
+                console.error("Uh oh, something bad happened", err.message);
+            });
+        }
 
 	</script>
 </body>
